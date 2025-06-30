@@ -1,0 +1,6 @@
+main: me.okay.ArrowOwnershipFix
+name: ArrowOwnershipFix
+description: This plugin undoes a change made in 1.21.6 that removes an arrow's owner when they log out. Useful for some technical builds that involve wireless redstone.
+version: '1.0'
+author: okay1204
+api-version: 1.21.6
