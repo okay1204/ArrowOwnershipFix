@@ -15,21 +15,30 @@ public class ArrowUtils {
         for (World world : Bukkit.getServer().getWorlds()) {
             for (Entity entity : world.getEntitiesByClass(AbstractArrow.class)) {
                 AbstractArrow arrow = (AbstractArrow) entity;
-                // Get the owner of the arrow from the PersistentDataContainer
-                UUID ownerId = arrow.getPersistentDataContainer().get(arrowOwnerKey, new PersistentDataType_UUID());
-
-                // If the arrow has no owner, skip it
-                if (ownerId == null) {
-                    continue;
-                }
-
-                // Check if the owner is online and the arrow has no owner
-                Player owner = Bukkit.getServer().getPlayer(ownerId);
-                if (owner != null && arrow.getShooter() == null) {
-                    // Set the owner of the arrow
-                    arrow.setShooter(owner);
-                }
+                setArrowOwner(arrowOwnerKey, arrow);
             }
+        }
+    }
+
+    public static void setArrowOwner(NamespacedKey arrowOwnerKey, AbstractArrow arrow) {
+        // If the arrow has an owner, skip it
+        if (arrow.getShooter() != null) {
+            return;
+        }
+
+        // Get the owner of the arrow from the PersistentDataContainer
+        UUID ownerId = arrow.getPersistentDataContainer().get(arrowOwnerKey, new PersistentDataType_UUID());
+
+        // If the arrow has no owner stored, skip it
+        if (ownerId == null) {
+            return;
+        }
+
+        // Check if the owner is online
+        Player owner = Bukkit.getServer().getPlayer(ownerId);
+        if (owner != null) {
+            // Set the owner of the arrow
+            arrow.setShooter(owner);
         }
     }
 }

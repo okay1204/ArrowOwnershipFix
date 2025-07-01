@@ -12,8 +12,10 @@ In Minecraft 1.21.6, Mojang changed the behavior of arrows so that when a player
 
 ## Features
 
-- **Automatic Restoration**: When plugin is enabled or players rejoin, their arrows automatically regain proper ownership
-- **Lightweight**: Minimal performance impact with efficient event handling
+- **Automatic Restoration**: Arrow ownership is automatically restored through multiple efficient mechanisms
+- **Efficient Processing**: Uses entity load events to process arrows as they enter the world, minimizing performance impact
+- **Comprehensive Coverage**: Handles arrows across chunk loading, server restarts, and player reconnections
+- **Lightweight**: Minimal performance impact with optimized event handling
 - **Compatible**: Works with Minecraft 1.21.6+ servers
 
 ## Installation
@@ -35,7 +37,10 @@ The plugin works by:
 
 1. **Tracking Arrow Launches**: When a player shoots an arrow, the plugin stores the player's UUID in the arrow's persistent data
 2. **Maintaining Ownership**: The arrow retains this ownership information even when the player logs out
-3. **Restoring Ownership**: When the player rejoins, the plugin scans all arrows and restores ownership for arrows that belong to that player
+3. **Restoring Ownership**: The plugin automatically restores arrow ownership through multiple mechanisms:
+   - **Entity Loading**: When arrows load into the world (chunk loading, server restart), their ownership is immediately restored
+   - **Player Rejoin**: When a player rejoins, all existing arrows are scanned and ownership is restored for arrows belonging to that player
+   - **Server Startup**: On plugin enable, all loaded arrows have their ownership restored
 
 ## Configuration
 

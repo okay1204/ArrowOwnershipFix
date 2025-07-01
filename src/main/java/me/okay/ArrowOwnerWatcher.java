@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.world.EntitiesLoadEvent;
 import org.bukkit.projectiles.ProjectileSource;
 
 import me.okay.utils.ArrowUtils;
@@ -44,7 +45,18 @@ public class ArrowOwnerWatcher implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
+    public void onEntitiesLoadEvent(EntitiesLoadEvent event) {
+        for (Entity entity : event.getEntities()) {
+            if (entity instanceof AbstractArrow) {
+                AbstractArrow arrow = (AbstractArrow) entity;
+                ArrowUtils.setArrowOwner(arrowOwnerKey, arrow);
+            }
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
     public void onPlayerJoin(PlayerJoinEvent event) {
         ArrowUtils.setAllArrowOwners(arrowOwnerKey);
     }
+
 }
